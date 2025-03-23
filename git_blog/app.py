@@ -6,6 +6,7 @@ app = Flask(__name__)
 @app.route('/home')
 def home_from_flask():
     url = url_for("join_from_flask")
+    subscribe_url = url_for("subscribe")
     return """
     <html>
         <head>
@@ -16,10 +17,10 @@ def home_from_flask():
             <h1>Girl Tech Blog</h1>
             <p>Welcome to this blog where you can find resources for women in technology.</p>
             <p>Interested in becoming a member of Girl Tech where you will have full access to resources, networking opportunities and much more?</p>
-            <a href="{}">Join Now!</a>
+            <a href={}>Join Now!</a>
             <hr>
             <h2>Subscribe to our Monthly Newsletter!</h2>
-            <form method="POST" action="{{ url_for('subscribe') }}">
+            <form method="POST" action="{}">
             <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Enter email" required>
@@ -30,9 +31,13 @@ def home_from_flask():
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         </body>
     </html>
-    """.format(url)
+    """.format(url, subscribe_url)
 
 
+@app.route('/subscribe', methods=["POST"])
+def subscribe_from_flask():
+    email = request.form.get("email")
+    return "New subscriber: " + str(email)
 
 
 @app.route('/about')
