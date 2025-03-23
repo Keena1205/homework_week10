@@ -15,11 +15,10 @@ def home_from_flask():
         <body>
             <h1>Girl Tech Blog</h1>
             <p>Welcome to this blog where you can find resources for women in technology.</p>
-            <p>Interested in joining our community? Join now!</p>
-            <hr>
+            <p>Interested in becoming a member of Girl Tech where you will have full access to resources, networking opportunities and much more?</p>
             <a href="{}">Join Now!</a>
-            <h2><button type="button" class="btn">Subscribe</button></h2>
-            <form method="POST" action="{{ url_for('subscribe') }}">
+            <hr>
+            <h2>Subscribe to our Monthly Newsletter!</h2>
             <form method="POST" action="{{ url_for('subscribe') }}">
             <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
@@ -32,6 +31,8 @@ def home_from_flask():
         </body>
     </html>
     """.format(url)
+
+
 
 
 @app.route('/about')
