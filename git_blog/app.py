@@ -6,19 +6,57 @@ app = Flask(__name__)
 @app.route('/home')
 def home_from_flask():
     url = url_for("join_from_flask")
-    subscribe_url = url_for("subscribe")
+    subscribe_url = url_for("subscribe_from_flask")
     return """
     <html>
         <head>
             <title>Girl Tech</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        
         </head>
-        <body>
+        
+        <body>        
             <h1>Girl Tech Blog</h1>
             <p>Welcome to this blog where you can find resources for women in technology.</p>
             <p>Interested in becoming a member of Girl Tech where you will have full access to resources, networking opportunities and much more?</p>
-            <a href={}>Join Now!</a>
+            <a href="{}">Join Now!</a>
             <hr>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Navigating the Numbers: Salary Talk for New Girls in Tech</h5>
+                            <p class="card-text">Some quick example text.</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Concur The Crowd: Networking Like a Pro</h5>
+                            <p class="card-text">Some quick example text.</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Tech Careers You Have Never Heard Of But Could Totaly Rock</h5>
+                            <p class="card-text">Some quick example text.</p>
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
             <h2>Subscribe to our Monthly Newsletter!</h2>
             <form method="POST" action="{}">
             <div class="form-group">
@@ -37,7 +75,10 @@ def home_from_flask():
 @app.route('/subscribe', methods=["POST"])
 def subscribe_from_flask():
     email = request.form.get("email")
-    return "New subscriber: " + str(email)
+    if email:
+        return f"New subscriber: {email}"
+    else:
+        return "No email provided!"
 
 
 @app.route('/about')
