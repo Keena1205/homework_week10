@@ -9,8 +9,12 @@ def home():
     about_url = url_for("about")
     resources_url = url_for("resources")
     join_nav_url = url_for("join")
+    blog1_url = url_for("show_blog", slug="tech-careers")
+    blog2_url = url_for("show_blog", slug="networking-tips")
+    blog3_url = url_for("show_blog", slug="salary-talk")
     join_url = url_for("join")
     subscribe_url = url_for("subscribe")
+
     return """
     <html>
         <head>
@@ -45,6 +49,45 @@ def home():
             
             <hr>
             
+            <h2> Explore our blogposts</h2>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="static/images/girltechcareers.jpeg" class="card-img-top" alt="Tech careers">
+                        <div class="card-body">
+                            <h5 class="card-title">Tech Careers You Have Never Heard Of But Could Totally Rock</h5>
+                            <p class="card-text">Discover exciting, lesser-known tech careers where creativity and curiosity thrive — and women are leading the way.</p>
+                            <a href="{}" class="btn btn-primary">Read more</a>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="static/images/networking.jpeg" class="card-img-top" alt="Networking">
+                        <div class="card-body">
+                            <h5 class="card-title">Conquer The Crowd: Networking Like a Pro</h5>
+                            <p class="card-text">A beginner-friendly guide to confidently navigating your first tech networking event, from prep to follow-up.</p>
+                            <a href="{}" class="btn btn-primary">Read more</a>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="static/images/salary.jpg" class="card-img-top" alt="Salary">
+                        <div class="card-body">
+                            <h5 class="card-title">Navigating the Numbers: Salary Talk for New Girls in Tech</h5>
+                            <p class="card-text">Learn how to handle salary conversations with confidence and strategy as a newcomer in tech.</p>
+                            <a href="{}" class="btn btn-primary">Read more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <br>
+          
             <h2> Become a member of Girl Tech</h2>
             <p>As a Girl Tech member, you'll get exclusive access to tutorials, career tips, community events, and inspiring stories from women in tech—all designed to help you grow, connect, and thrive in the industry. Whether you're just starting out or leveling up, there's a place for you here.</p>
             <a href="{}">Join now!</a>
@@ -71,7 +114,7 @@ def home():
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         </body>
     </html>
-    """.format(home_url, about_url, resources_url, join_nav_url, join_url, subscribe_url)
+    """.format(home_url, about_url, resources_url, join_nav_url, blog1_url, blog2_url, blog3_url, join_url, subscribe_url)
 
 
 @app.route('/subscribe', methods=["POST"])
@@ -82,134 +125,103 @@ def subscribe():
     <p><a href="{}">Back to Home</a></p>    
     """.format(name, home_url)
 
+# dictionary with blogpost info
+blog_posts = {
+    "tech-careers": {
+        "title": "Tech Careers You’ve Never Heard Of (But Totally Could Rock!)",
+        "author": "Girl Tech",
+        "body": """
+        <p>When most people hear "tech job," they imagine someone glued to a screen, typing endless lines of code. But the truth? Tech is way more diverse — and creative — than you might think. Whether you're analytical, artistic, strategic, or somewhere in between, there's a role for you. And spoiler alert: women are already killing it in these spaces.</p>
+
+        <p>Here are five tech careers you <strong>might not have heard of</strong> — but that you could totally thrive in:</p>
+
+        <h2>💡 UX Designer (User Experience Designer)</h2>
+        <p>If you’re the kind of person who notices when an app feels clunky or a website just <em>works</em>, UX design might be your thing...</p>
+
+        <h2>🔐 Cybersecurity Analyst</h2>
+        <p>Love solving puzzles or spotting when something feels off? Cybersecurity is about protecting data...</p>
+
+        <h2>🧠 Data Ethics Specialist</h2>
+        <p>As tech gets smarter (think AI and big data), we need people who can ask, "Is this the right thing to do?"...</p>
+
+        <h2>🤖 AI Prompt Engineer</h2>
+        <p>This one's new — and super cool. Prompt engineers write clever instructions for AI tools like ChatGPT...</p>
+
+        <h2>📈 Product Manager</h2>
+        <p>Think of this as the CEO of a product. Product managers work with designers, developers, and marketers...</p>
+
+        <p><strong>The future of tech is diverse — and we want you in it.</strong></p>
+        """
+    },
+
+    "networking-tips": {
+        "title": "Conquer the Crowd: Networking Like a Pro (New Girl in Tech Edition!)",
+        "author": "Girl Tech",
+        "body": """
+        <p>You’re new to tech. You’ve got your first networking event coming up. And if we’re being real? The idea of entering a room full of confident, experienced professionals is… intimidating. But don’t panic — this is your chance to shine, learn, and start building your tribe in tech!</p>
+
+        <h2>🔍 Before You Go: Prep Like a Pro</h2>
+        <p>Think of this as your mission briefing. Start by researching the event...</p>
+
+        <h2>🌟 At the Event: Dive In</h2>
+        <p>Take a breath. You belong here. Everyone started somewhere...</p>
+
+        <h2>📩 After the Event: Keep the Spark Alive</h2>
+        <p>Networking doesn’t stop at the venue doors. Follow up within a couple of days...</p>
+
+        <p><strong>Girl Tech’s got your back 💻💪</strong></p>
+        """
+    },
+
+    "salary-talk": {
+        "title": "Navigating the Numbers: Salary Talk for New Girls in Tech",
+        "author": "Girl Tech",
+        "body": """
+        <p>Ah, the salary question — the moment that can make even the most confident tech newbie sweat. “What are your salary expectations?” or worse, “What are you currently making?” Cue the internal panic. But guess what? You’ve got this.</p>
+
+        <h2>📊 Know Your Worth</h2>
+        <p>Before you walk into any interview, come armed with knowledge...</p>
+
+        <h2>🚫 Skip the Salary History Trap</h2>
+        <p>In many places, it’s illegal to ask about your past pay...</p>
+
+        <h2>💬 Talk Ranges, Not Exact Numbers</h2>
+        <p>Instead of locking yourself into a single figure, offer a well-researched range...</p>
+
+        <h2>🌟 Lead with Value</h2>
+        <p>Don’t just talk about what you want — talk about what you bring...</p>
+
+        <p><strong>Girl Tech’s got your back 💼💖</strong></p>
+        """
+    }
+}
 
 
-@app.route('/tech-careers')
-def tech_careers():
-    return """
-    <html>
-        <head>
-          <title>Tech Careers You’ve Never Heard Of (But Totally Could Rock!) | Girl Tech</title>
-        </head>
-        
-        <body style="font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 2rem; line-height: 1.6;">
-          <h1>Tech Careers You’ve Never Heard Of (But Totally Could Rock!)</h1>
-          <p><em>By Girl Tech</em></p>
-    
-          <p>When most people hear "tech job," they imagine someone glued to a screen, typing endless lines of code. But the truth? Tech is way more diverse — and creative — than you might think. Whether you're analytical, artistic, strategic, or somewhere in between, there's a role for you. And spoiler alert: women are already killing it in these spaces.</p>
-    
-          <p>Here are five tech careers you <strong>might not have heard of</strong> — but that you could totally thrive in:</p>
-    
-          <h2>💡 UX Designer (User Experience Designer)</h2>
-          <p>If you’re the kind of person who notices when an app feels clunky or a website just <em>works</em>, UX design might be your thing. UX designers make digital experiences smooth, intuitive, and user-friendly. It’s where psychology, creativity, and empathy meet design. And the best part? You don’t need to code — just an eye for what feels right.</p>
-    
-          <h2>🔐 Cybersecurity Analyst</h2>
-          <p>Love solving puzzles or spotting when something feels off? Cybersecurity is about protecting data and systems from hackers and cyber threats. With digital safety becoming more important than ever, cybersecurity analysts are in high demand — and women are underrepresented. That means: massive opportunity.</p>
-    
-          <h2>🧠 Data Ethics Specialist</h2>
-          <p>As tech gets smarter (think AI and big data), we need people who can ask, "Is this the right thing to do?" Data ethics specialists work at the intersection of tech, law, and morality. If you care about fairness, privacy, and accountability, this is a growing space where your voice matters.</p>
-    
-          <h2>🤖 AI Prompt Engineer</h2>
-          <p>This one's new — and super cool. Prompt engineers write clever instructions for AI tools like ChatGPT to get the best results. It's part communication, part creativity, part logic. No coding required, just clear thinking and a playful approach to language and problem-solving.</p>
-    
-          <h2>📈 Product Manager</h2>
-          <p>Think of this as the CEO of a product. Product managers work with designers, developers, and marketers to turn an idea into something real. If you're organised, love bringing people together, and enjoy solving problems from a big-picture view, this is your jam.</p>
-    
-          <p>So whether you’re tech-curious, mid-career, or just exploring — don’t let the word “tech” scare you. There’s room for storytellers, organisers, artists, thinkers, and dreamers.</p>
-    
-          <p><strong>The future of tech is diverse — and we want you in it.</strong></p>
-    
-        </body>
-    </html>
+# A slug is a human-readable, unique identifier, used to identify a resource
+# You use a slug when you want to refer to an item while preserving the ability to see, at a glance, what the item is
+@app.route('/blog/<slug>')
+def show_blog(slug):
+    post = blog_posts.get(slug)
+    home_url=url_for("home")
+    return f"""
+        <html>
+            <head>
+                <title>{post['title']} | {post['author']}</title>
+                
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+            </head>
+            <body style="font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 2rem; line-height: 1.6;">
+                <h1>{post['title']}</h1>
+                <p><em>By {post['author']}</em></p>
+                {post['body']}
+                
+                <a href="{home_url}"><button type="submit" class="btn btn-primary">Back to Home</button>
+                         
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            </body>
+        </html>
     """
 
-
-@app.route('/networking')
-def networking():
-    return """
-    <html>
-        <head>
-            <meta charset="UTF-8">
-            <title>Conquer the Crowd: Networking Like a Pro | Girl Tech</title>
-        </head>
-        
-        <body style="font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 2rem; line-height: 1.6;">
-            <h1>Conquer the Crowd: Networking Like a Pro <br><small>(New Girl in Tech Edition!)</small></h1>
-            <p><em>By Girl Tech</em></p>
-    
-            <p>You’re new to tech. You’ve got your first networking event coming up. And if we’re being real? The idea of entering a room full of confident, experienced professionals is… intimidating. But don’t panic — this is your chance to shine, learn, and start building your tribe in tech!</p>
-    
-            <h2>🔍 Before You Go: Prep Like a Pro</h2>
-            <p>Think of this as your mission briefing. Start by researching the event. Check out the speakers, scan the attendee list (if available), and look up the companies or topics being covered. This prep will help you feel grounded and give you conversation starters.</p>
-    
-            <p>Now, the magic move: create your elevator pitch. Just 20–30 seconds of who you are, what you’re into, and what you’re hoping to gain. Keep it natural, and practice until it flows confidently — not like a robot.</p>
-    
-            <p>Pro tip: pack business cards (yes, even basic ones), a notebook, and a pen. Dress smart-casual or whatever makes you feel like your most powerful self. Confidence is half the battle.</p>
-    
-            <h2>🌟 At the Event: Dive In</h2>
-            <p>Take a breath. You belong here. Everyone started somewhere. Begin with low-pressure conversations — someone standing solo, or a small, relaxed group. Smile, introduce yourself, and ask open-ended questions like: “What brought you here today?” or “What’s been your favourite part of the event so far?”</p>
-    
-            <p>Listen like you mean it. Don’t just wait to speak — really engage. People appreciate feeling heard, and it makes you way more memorable.</p>
-    
-            <p>It’s totally okay to ask for advice! Try: “I’m new to the industry and curious about [topic] — do you have any tips for someone just starting out?” Most people love to share wisdom — and it sparks meaningful conversation.</p>
-    
-            <h2>📩 After the Event: Keep the Spark Alive</h2>
-            <p>Networking doesn’t stop at the venue doors. Follow up within a couple of days. Send a thoughtful LinkedIn request or a quick email referencing your chat. It shows you were paying attention — and keeps the door open.</p>
-    
-            <p>Want to learn more from someone you clicked with? Ask for a virtual coffee. A 15-minute chat can lead to mentorship, internships, or even your next big break.</p>
-    
-            <h2>💬 Final Word: You’ve Got This</h2>
-            <p>Tech is full of amazing, welcoming people. Show up as yourself — enthusiastic, curious, and ready to grow. Your perspective matters, and your fresh energy is an asset. </p>
-    
-            <p>Networking isn’t about collecting contacts. It’s about building real, human connections. So go ahead: step into that room, start that conversation, and <strong>own your space</strong> in tech.</p>
-    
-            <p><strong>Girl Tech’s got your back 💻💪</strong></p>
-        </body>
-    </html>
-    """
-
-
-@app.route('/salary-talk')
-def salary():
-    return """
-    <html>
-        <head>
-            <title>Navigating the Numbers | Girl Tech</title>
-        </head>
-        
-        <body style="font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 2rem; line-height: 1.6;">
-            <h1>Navigating the Numbers: <br><small>Salary Talk for New Girls in Tech</small></h1>
-            <p><em>By Girl Tech</em></p>
-    
-            <p>Ah, the salary question — the moment that can make even the most confident tech newbie sweat. “What are your salary expectations?” or worse, “What are you currently making?” Cue the internal panic. But guess what? You’ve got this.</p>
-    
-            <h2>📊 Know Your Worth</h2>
-            <p>Before you walk into any interview, come armed with knowledge. Use tools like Glassdoor, Payscale, and LinkedIn Salary to get a sense of the going rate for your role, experience level, and location. Your number isn’t random — it’s a reflection of your value. Research is power.</p>
-    
-            <h2>🚫 Skip the Salary History Trap</h2>
-            <p>In many places, it’s illegal to ask about your past pay — and even where it’s legal, you don’t have to answer. Try this: <strong>“I’m focused on the value I bring to this role and prefer to discuss salary based on the market rate.”</strong> Professional, clear, and puts the focus where it belongs: forward.</p>
-    
-            <h2>💬 Talk Ranges, Not Exact Numbers</h2>
-            <p>Instead of locking yourself into a single figure, offer a well-researched range. For example: <strong>“Based on my research, I’m looking for something in the range of 60 to 70k, depending on the full package.”</strong> Flexibility shows confidence and leaves room for negotiation.</p>
-    
-            <h2>🌟 Lead with Value</h2>
-            <p>Don’t just talk about what you want — talk about what you bring. Highlight your skills, enthusiasm, and what you’ll contribute. <em>“With my background in UX and project coordination, I’m confident I can make an immediate impact on your product team.”</em></p>
-    
-            <h2>🧾 Look at the Full Picture</h2>
-            <p>Salary is just one slice of the pie. Think about health benefits, remote work, learning stipends, mental health days, and career growth opportunities. These all add serious value to your total package.</p>
-    
-            <h2>🗣️ Practice Makes Powerful</h2>
-            <p>Negotiation is a skill, and like any skill — you get better with practice. Do a mock run with a friend, mentor, or even in the mirror. The more you say it out loud, the more confident you’ll feel.</p>
-    
-            <h2>⏳ Take Your Time</h2>
-            <p>If you’re offered something that feels off, it’s okay to ask for time. Say, <em>“Thank you — I’d love to take a day or two to consider the offer.”</em> Professional. Assertive. Respectful.</p>
-    
-            <p>💪 As a new girl in tech, your ideas, skills, and voice matter. Don’t be afraid to advocate for yourself. The right role will honour your worth — and you’re more than worth it.</p>
-    
-            <p><strong>Girl Tech’s got your back 💼💖</strong></p>
-        </body>
-    </html>
-    """
 
 
 @app.route('/about')
